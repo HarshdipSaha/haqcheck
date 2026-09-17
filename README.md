@@ -18,16 +18,7 @@ Which Indian gig-worker welfare rule applies to you — decided by **Cedar** in 
 </div>
 
 <div align="center">
-
-<!-- TODO: replace this block with docs/assets/demo.gif once recorded (Task 15) -->
-<table>
-<tr><td align="center" width="880">
-<br>
-<sub><b>demo gif — recording pending (Task 15)</b></sub>
-<br><br>
-</td></tr>
-</table>
-
+  <img src="docs/assets/demo.gif" alt="Switching worker scenarios in HaqCheck: a 73-day case comes back Not Eligible under Central Rules, crossing the 90-day threshold flips it to Eligible with a fresh citation, and the Cedar Rules drawer shows the actual policy — IN-SSR2026-90day — that made the call, highlighted as the active determining policy." width="880">
 </div>
 
 ---
