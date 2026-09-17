@@ -1,0 +1,66 @@
+[
+  {"name": "KA rider 73 days: KA fund yes, central not yet", "jurisdiction": "karnataka",
+   "facts": {"state": "KA", "daysWorkedLast12m": 73, "eshramRegistered": true, "platforms": ["zomato", "swiggy"], "vehicle": "two_wheeler", "age": 24},
+   "expected": {"central_social_security": {"verdict": "Not eligible", "cited": []},
+                "ka_welfare_fund": {"verdict": "Eligible", "cited": ["KA-HC-2026-cess-scope"]}}},
+
+  {"name": "boundary 89 days", "jurisdiction": "karnataka",
+   "facts": {"state": "KA", "daysWorkedLast12m": 89, "eshramRegistered": true, "platforms": ["zomato"], "vehicle": "two_wheeler", "age": 30},
+   "expected": {"central_social_security": {"verdict": "Not eligible", "cited": []}}},
+
+  {"name": "boundary 90 days", "jurisdiction": "karnataka",
+   "facts": {"state": "KA", "daysWorkedLast12m": 90, "eshramRegistered": true, "platforms": ["zomato"], "vehicle": "two_wheeler", "age": 30},
+   "expected": {"central_social_security": {"verdict": "Eligible", "cited": ["IN-SSR2026-90day"]}}},
+
+  {"name": "boundary 91 days", "jurisdiction": "central",
+   "facts": {"state": "KA", "daysWorkedLast12m": 91, "eshramRegistered": true, "platforms": ["zomato"], "vehicle": "two_wheeler", "age": 30},
+   "expected": {"central_social_security": {"verdict": "Eligible", "cited": ["IN-SSR2026-90day"]}}},
+
+  {"name": "120 days but not on e-Shram", "jurisdiction": "central",
+   "facts": {"state": "MH", "daysWorkedLast12m": 120, "eshramRegistered": false, "platforms": ["swiggy"], "vehicle": "bicycle", "age": 22},
+   "expected": {"central_social_security": {"verdict": "Not eligible", "cited": []}}},
+
+  {"name": "Pune rider 120 days under KA rulebook: central yes, KA fund not applicable (forbid)", "jurisdiction": "karnataka",
+   "facts": {"state": "MH", "daysWorkedLast12m": 120, "eshramRegistered": true, "platforms": ["zomato"], "vehicle": "two_wheeler", "age": 27},
+   "expected": {"central_social_security": {"verdict": "Eligible", "cited": ["IN-SSR2026-90day"]},
+                "ka_welfare_fund": {"verdict": "Not applicable", "cited": ["KA-HC-2026-out-of-state"]}}},
+
+  {"name": "KA but non-notified platform", "jurisdiction": "karnataka",
+   "facts": {"state": "KA", "daysWorkedLast12m": 200, "eshramRegistered": true, "platforms": ["porter"], "vehicle": "three_wheeler", "age": 35},
+   "expected": {"ka_welfare_fund": {"verdict": "Not eligible", "cited": []}}},
+
+  {"name": "KA fund under central rulebook: outside manifest", "jurisdiction": "central",
+   "facts": {"state": "KA", "daysWorkedLast12m": 73, "eshramRegistered": true, "platforms": ["zomato"], "vehicle": "two_wheeler", "age": 24},
+   "expected": {"ka_welfare_fund": {"verdict": "Not applicable", "cited": ["manifest:central"]}}},
+
+  {"name": "urban_company in KA", "jurisdiction": "karnataka",
+   "facts": {"state": "KA", "daysWorkedLast12m": 10, "eshramRegistered": false, "platforms": ["urban_company"], "vehicle": "none", "age": 40},
+   "expected": {"ka_welfare_fund": {"verdict": "Eligible", "cited": ["KA-HC-2026-cess-scope"]},
+                "central_social_security": {"verdict": "Not eligible", "cited": []}}},
+
+  {"name": "zero days, registered", "jurisdiction": "central",
+   "facts": {"state": "DL", "daysWorkedLast12m": 0, "eshramRegistered": true, "platforms": ["zepto"], "vehicle": "two_wheeler", "age": 19},
+   "expected": {"central_social_security": {"verdict": "Not eligible", "cited": []}}},
+
+  {"name": "366 days upper bound", "jurisdiction": "central",
+   "facts": {"state": "TN", "daysWorkedLast12m": 366, "eshramRegistered": true, "platforms": ["swiggy"], "vehicle": "two_wheeler", "age": 50},
+   "expected": {"central_social_security": {"verdict": "Eligible", "cited": ["IN-SSR2026-90day"]}}},
+
+  {"name": "multiple platforms incl. notified", "jurisdiction": "karnataka",
+   "facts": {"state": "KA", "daysWorkedLast12m": 95, "eshramRegistered": true, "platforms": ["porter", "zepto"], "vehicle": "two_wheeler", "age": 29},
+   "expected": {"ka_welfare_fund": {"verdict": "Eligible", "cited": ["KA-HC-2026-cess-scope"]},
+                "central_social_security": {"verdict": "Eligible", "cited": ["IN-SSR2026-90day"]}}},
+
+  {"name": "central rulebook boundary 89", "jurisdiction": "central",
+   "facts": {"state": "UP", "daysWorkedLast12m": 89, "eshramRegistered": true, "platforms": ["swiggy"], "vehicle": "bicycle", "age": 21},
+   "expected": {"central_social_security": {"verdict": "Not eligible", "cited": []}}},
+
+  {"name": "central rulebook boundary 90", "jurisdiction": "central",
+   "facts": {"state": "UP", "daysWorkedLast12m": 90, "eshramRegistered": true, "platforms": ["swiggy"], "vehicle": "bicycle", "age": 21},
+   "expected": {"central_social_security": {"verdict": "Eligible", "cited": ["IN-SSR2026-90day"]}}},
+
+  {"name": "KA rulebook, 100 days but not on e-Shram", "jurisdiction": "karnataka",
+   "facts": {"state": "KA", "daysWorkedLast12m": 100, "eshramRegistered": false, "platforms": ["swiggy"], "vehicle": "two_wheeler", "age": 33},
+   "expected": {"central_social_security": {"verdict": "Not eligible", "cited": []},
+                "ka_welfare_fund": {"verdict": "Eligible", "cited": ["KA-HC-2026-cess-scope"]}}}
+]
