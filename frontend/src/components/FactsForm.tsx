@@ -14,7 +14,7 @@ const PLATFORMS = [
 
 const STATES = [
   { code: "KA", label: "KA — Karnataka (Bengaluru)" },
-  { code: "MH", label: "MH — Maharashtra (Mumbai/Pune)" },
+  { code: "MH", label: "MH — Maharashtra (Mumbai / Pune)" },
   { code: "DL", label: "DL — Delhi NCR" },
   { code: "TN", label: "TN — Tamil Nadu (Chennai)" },
   { code: "TS", label: "TS — Telangana (Hyderabad)" },
@@ -81,46 +81,49 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
 
   return (
     <form
-      className="card form"
+      className="card"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(f);
       }}
     >
       <div className="form-header">
-        <h2>Worker Profile & Work History</h2>
-        <p className="form-subtitle">Enter your gig platform facts to evaluate welfare entitlement under Cedar rules.</p>
+        <h2 className="form-title">Worker Profile & Work History</h2>
+        <p className="form-sub">Enter your platform work records to evaluate statutory entitlement via Cedar policies.</p>
       </div>
 
-      {/* Quick Test Presets */}
-      <div className="presets-bar">
-        <span className="presets-label">⚡ One-Click Test Scenarios</span>
-        <div className="presets-chips">
+      {/* Preset Scenarios */}
+      <div className="presets-section">
+        <span className="presets-label">Select Test Scenario</span>
+        <div className="presets-list">
           <button
             type="button"
-            className={`preset-btn ${activePreset === 1 ? "active" : ""}`}
+            className={`preset-chip ${activePreset === 1 ? "active" : ""}`}
             onClick={() => applyPreset(1, DEMO_CASE_1)}
           >
-            🛵 Case 1: Bengaluru 73d (The Dispute)
+            <span className="preset-num">01</span>
+            <span>Bengaluru 73d (The Dispute)</span>
           </button>
           <button
             type="button"
-            className={`preset-btn ${activePreset === 2 ? "active" : ""}`}
+            className={`preset-chip ${activePreset === 2 ? "active" : ""}`}
             onClick={() => applyPreset(2, DEMO_CASE_2)}
           >
-            📦 Case 2: Pune 120d (Out-of-State)
+            <span className="preset-num">02</span>
+            <span>Pune 120d (Out-of-State)</span>
           </button>
           <button
             type="button"
-            className={`preset-btn ${activePreset === 3 ? "active" : ""}`}
+            className={`preset-chip ${activePreset === 3 ? "active" : ""}`}
             onClick={() => applyPreset(3, DEMO_CASE_3)}
           >
-            🎯 Case 3: 90d Boundary
+            <span className="preset-num">03</span>
+            <span>90d Statutory Boundary</span>
           </button>
         </div>
       </div>
 
-      {/* State Selector */}
+      {/* Operating State */}
       <div className="form-group">
         <label htmlFor="field-state">Operating State</label>
         <select
@@ -142,7 +145,7 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
 
       {/* Days Worked */}
       <div className="form-group">
-        <label htmlFor="field-days">Days Worked in Preceding 12 Months</label>
+        <label htmlFor="field-days">Days Worked with Aggregator (Last 12 Months)</label>
         <input
           id="field-days"
           type="number"
@@ -155,49 +158,47 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
           }}
         />
         <span className="input-helper">
-          Threshold: <strong>90 days</strong> minimum for Central Social Security benefits.
+          Central Rules (IN-SSR2026-90day) mandate a minimum threshold of 90 days.
         </span>
         {errors.daysWorkedLast12m && <small className="err">{errors.daysWorkedLast12m}</small>}
       </div>
 
       {/* e-Shram Registration Toggle */}
-      <label className="switch-card">
+      <div
+        className="switch-card"
+        onClick={() => {
+          setActivePreset(0);
+          set("eshramRegistered", !f.eshramRegistered);
+        }}
+      >
         <div className="switch-content">
-          <span className="switch-title">e-Shram / Shram Suvidha Registration</span>
-          <span className="switch-desc">Mandatory national portal for informal worker social security identification</span>
+          <span className="switch-title">e-Shram National Registration</span>
+          <span className="switch-desc">Mandatory national registration on the Shram Suvidha portal</span>
         </div>
-        <input
-          type="checkbox"
-          className="switch-input"
-          checked={f.eshramRegistered}
-          onChange={(e) => {
-            setActivePreset(0);
-            set("eshramRegistered", e.target.checked);
-          }}
-        />
-      </label>
+        <div className={`custom-switch ${f.eshramRegistered ? "on" : ""}`}>
+          <div className="switch-handle" />
+        </div>
+      </div>
 
-      {/* Platforms Selector */}
-      <fieldset className="fieldset-platforms">
-        <legend>Aggregator Platforms You Work On</legend>
-        <div className="platform-chips-grid">
+      {/* Aggregator Platforms Grid */}
+      <fieldset className="platforms-fieldset">
+        <legend className="platforms-legend">Aggregator Platforms</legend>
+        <div className="platforms-grid">
           {PLATFORMS.map((p) => {
             const isSelected = f.platforms.includes(p.id);
             return (
               <label
                 key={p.id}
-                className={`platform-chip ${isSelected ? "selected" : ""}`}
+                className={`platform-pill ${isSelected ? "selected" : ""}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActivePreset(0);
+                  togglePlatform(p.id);
+                }}
               >
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={() => {
-                    setActivePreset(0);
-                    togglePlatform(p.id);
-                  }}
-                />
+                <input type="checkbox" checked={isSelected} readOnly />
                 <span>{p.label}</span>
-                {p.notified && <span className="notified-badge" title="Notified platform under Karnataka HC order">HC</span>}
+                {p.notified && <span className="notified-tag">NOTIFIED</span>}
               </label>
             );
           })}
@@ -207,7 +208,7 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
 
       {/* Vehicle Type */}
       <div className="form-group">
-        <label htmlFor="field-vehicle">Delivery Vehicle Type</label>
+        <label htmlFor="field-vehicle">Delivery Vehicle Classification</label>
         <select
           id="field-vehicle"
           value={f.vehicle}
@@ -222,12 +223,12 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
           <option value="four_wheeler">Four-Wheeler (Car / Light Commercial)</option>
           <option value="none">None / Walking</option>
         </select>
-        <span className="input-helper">Used for Karnataka state welfare cess rate categorization.</span>
+        <span className="input-helper">Used for Karnataka state welfare cess rate calculation.</span>
       </div>
 
       {/* Age */}
       <div className="form-group">
-        <label htmlFor="field-age">Age (Years)</label>
+        <label htmlFor="field-age">Age</label>
         <input
           id="field-age"
           type="number"
@@ -244,13 +245,10 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
 
       {/* Submit Button */}
       <button type="submit" className="submit-btn" disabled={busy}>
-        {busy ? (
-          <>Evaluating with Cedar…</>
-        ) : (
-          <>
-            Verify Entitlements with Cedar <span>→</span>
-          </>
-        )}
+        <span>{busy ? "Evaluating Policy Engine…" : "Verify Entitlements with Cedar"}</span>
+        <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none">
+          <path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </button>
     </form>
   );

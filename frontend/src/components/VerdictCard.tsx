@@ -34,7 +34,6 @@ export function VerdictCard({
   const isEligible = result.verdict === "Eligible";
   const isNotEligible = result.verdict === "Not eligible";
 
-  // Check if there is a days worked requirement to show a progress bar
   const daysReq = why.find((w) => w.label.toLowerCase().includes("days worked"));
   const daysActual = typeof daysReq?.actual === "number" ? daysReq.actual : 0;
   const daysRequired = typeof daysReq?.required === "number" ? daysReq.required : 90;
@@ -45,94 +44,107 @@ export function VerdictCard({
       {/* Header */}
       <div className="verdict-header">
         <div>
-          <span className="benefit-jurisdiction-tag">
-            {result.benefitId.startsWith("ka_") ? "State Scheme (Karnataka)" : "National Central Scheme"}
+          <span className="scheme-tag">
+            {result.benefitId.startsWith("ka_") ? "State Scheme (Karnataka)" : "Central Scheme (National)"}
           </span>
-          <h3>{benefitName(result.benefitId)}</h3>
+          <h3 className="verdict-title">{benefitName(result.benefitId)}</h3>
         </div>
+
         <span className={`badge ${tone}`}>
-          {isEligible && "✓ "}
-          {isNotEligible && "✕ "}
-          {result.verdict === "Not applicable" && "— "}
-          {result.verdict}
+          {isEligible && (
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="3.5 8.5 6.5 11.5 12.5 5" />
+            </svg>
+          )}
+          {isNotEligible && (
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" y1="4" x2="12" y2="12" />
+              <line x1="12" y1="4" x2="4" y2="12" />
+            </svg>
+          )}
+          {result.verdict === "Not applicable" && (
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <line x1="4" y1="8" x2="12" y2="8" />
+            </svg>
+          )}
+          <span>{result.verdict}</span>
         </span>
       </div>
 
       {/* Cited Cedar Rulebox */}
       <div className="citation-box">
         {result.cited.length === 0 ? (
-          <p className="citation-text" style={{ color: "#64748b", fontStyle: "italic" }}>
-            No rule permits this benefit under the current facts. Requirements according to the rulebook:
+          <p className="citation-source" style={{ fontStyle: "italic", opacity: 0.7 }}>
+            No permit rule matched under the current facts. Mandatory conditions from rulebook:
           </p>
         ) : (
           result.cited.map((c) => (
             <div key={c.id}>
-              <div className="citation-header">
-                <span className="rule-id-tag">
-                  <code>{c.id}</code>
-                </span>
-                <span className="confidence-tag">
+              <div className="citation-meta">
+                <span className="rule-id">{c.id}</span>
+                <span className="rule-effect">
                   Effect: <strong>{c.effect}</strong> · {c.confidence}
                 </span>
               </div>
-              <p className="citation-text">{c.source}</p>
+              <p className="citation-source">{c.source}</p>
             </div>
           ))
         )}
       </div>
 
       {/* Requirements Checklist */}
-      <ul className="requirements-checklist">
+      <ul className="requirements-list">
         {why.map((w) => (
-          <li key={w.label} className={`requirement-item ${w.met ? "met" : "unmet"}`}>
-            <div>
+          <li key={w.label} className="req-item">
+            <div className="req-left">
               <span className="req-label">
-                <span className={`req-icon ${w.met ? "met" : "unmet"}`}>{w.met ? "✓" : "✕"}</span>
+                <span className={`req-status-dot ${w.met ? "met" : "unmet"}`} />
                 {w.label}
               </span>
               {w.label.toLowerCase().includes("days worked") && (
-                <div className="progress-container">
+                <div className="progress-bar-wrap">
                   <div
-                    className={`progress-bar ${w.met ? "met" : "unmet"}`}
+                    className={`progress-fill ${w.met ? "met" : "unmet"}`}
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
               )}
             </div>
-            <span className="req-stats">
+            <span className="req-values">
               <strong>{fmt(w.actual)}</strong> / {fmt(w.required)}
             </span>
           </li>
         ))}
       </ul>
 
-      {/* Next Step Box */}
+      {/* Actionable Next Step */}
       {nextStep && (
-        <div className="next-step-box">
-          <span className="next-step-icon">💡</span>
+        <div className="next-action">
+          <svg className="action-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 3 11 8 6 13" />
+          </svg>
           <div>
-            <strong>Next Action:</strong> {nextStep}
+            <strong style={{ color: "var(--paper)" }}>Next Step: </strong>
+            <span>{nextStep}</span>
           </div>
         </div>
       )}
 
       {/* Vernacular Bedrock Explanation */}
-      <div className="explain-box">
-        <div className="explain-header">
-          <span className="explain-title">
-            <span>🗣️ Plain-Language Explanation</span>
-          </span>
-          <span className="bedrock-badge">Amazon Bedrock · Nova Lite Grounded</span>
+      <div className="explanation-section">
+        <div className="explanation-header">
+          <span className="explanation-badge">Plain-Language Summary</span>
+          <span className="bedrock-pill">Bedrock Nova Lite · Grounded</span>
         </div>
 
         {explaining ? (
-          <div className="shimmer-skeleton" aria-label="Loading explanation">
-            <div className="shimmer-line w-full" />
-            <div className="shimmer-line w-80" />
-            <div className="shimmer-line w-60" />
+          <div className="skeleton-box" aria-label="Synthesizing explanation">
+            <div className="skeleton-bar" style={{ width: "100%" }} />
+            <div className="skeleton-bar" style={{ width: "85%" }} />
+            <div className="skeleton-bar" style={{ width: "60%" }} />
           </div>
         ) : (
-          <p className="explain-body">{explanation ?? "No explanation available."}</p>
+          <p className="explanation-body">{explanation ?? "—"}</p>
         )}
       </div>
     </section>

@@ -23,7 +23,6 @@ export function RulebookDrawer({
   open,
   onClose,
 }: Props) {
-  // Close drawer on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -50,10 +49,11 @@ export function RulebookDrawer({
       return (
         <div
           key={f.file}
-          className={`cedar-block ${isHit ? "hit" : ""} ${dim ? "dim" : ""}`}
+          className={`cedar-card ${isHit ? "hit" : ""} ${dim ? "dim" : ""}`}
         >
-          <div className="cedar-block-file">
-            📄 {f.file} {isHit && <span style={{ color: "#f59e0b", marginLeft: 8 }}>⚡ Active Determining Policy</span>}
+          <div className="cedar-file">
+            <span>{f.file}</span>
+            {isHit && <span className="cedar-active-badge">Active Determining Policy</span>}
           </div>
           <pre style={{ margin: 0 }}>{f.text}</pre>
         </div>
@@ -62,33 +62,36 @@ export function RulebookDrawer({
 
   return (
     <>
-      <div className="drawer-backdrop" onClick={onClose} />
-      <aside className="drawer" role="dialog" aria-modal="true" aria-label="Cedar Rulebook Viewer">
-        <header>
+      <div className="drawer-overlay" onClick={onClose} />
+      <aside className="drawer-panel" role="dialog" aria-modal="true" aria-label="Cedar Rulebook Viewer">
+        <div className="drawer-head">
           <div>
-            <span style={{ fontSize: 11, fontWeight: 700, color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              Amazon Verified Permissions (AVP)
-            </span>
-            <h3>{book.displayName}</h3>
+            <div className="label" style={{ color: "var(--tangerine)", marginBottom: 4 }}>
+              Amazon Verified Permissions
+            </div>
+            <h3 className="drawer-title">{book.displayName}</h3>
           </div>
-          <button className="drawer-close-btn" onClick={onClose}>
-            ✕ Close
+          <button className="pill-btn" onClick={onClose}>
+            <span>Close</span>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="4" y1="4" x2="12" y2="12" />
+              <line x1="12" y1="4" x2="4" y2="12" />
+            </svg>
           </button>
-        </header>
+        </div>
 
-        <p style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.5 }}>
-          These are the authoritative Cedar policies stored in AWS Verified Permissions.
-          Eligibility is computed via mathematical evaluation of <code>permit</code> and <code>forbid</code> rules; the LLM never decides or alters policy logic.
+        <p style={{ fontSize: 13.5, color: "var(--paper-75)", lineHeight: 1.7, marginBottom: 24 }}>
+          Authoritative Cedar policies stored in AWS Verified Permissions. Decisions are evaluated via mathematical satisfaction of <code>permit</code> and <code>forbid</code> clauses; the LLM is barred from deciding or modifying policies.
         </p>
 
-        <div className="drawer-section-title">Common Policies (Social Security Central Rules)</div>
+        <div className="label" style={{ marginBottom: 10 }}>Common Policies (Central Rules 2026)</div>
         {renderCedar(book.common, false)}
 
-        <div className="drawer-section-title">
+        <div className="label" style={{ marginTop: 24, marginBottom: 10 }}>
           Karnataka State Overlay Policies{" "}
           {book.overlay.length === 0 && (
-            <span style={{ fontSize: 11, color: "#64748b", textTransform: "none", fontWeight: 400 }}>
-              (Not active under Central rulebook)
+            <span style={{ textTransform: "none", color: "var(--paper-35)", fontWeight: 400 }}>
+              (Not included in Central rulebook)
             </span>
           )}
         </div>

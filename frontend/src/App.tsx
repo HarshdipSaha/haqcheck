@@ -35,7 +35,6 @@ export default function App() {
       const { explanations } = await explain(items, lang);
       setExplanations(explanations);
     } catch {
-      // spec §9: the decision card is unaffected if LLM explanation fails
       setExplanations(
         Object.fromEntries(
           next.results.map((r) => [
@@ -78,7 +77,6 @@ export default function App() {
     }
   }
 
-  // Initial run on mount with demo case 1 so the page loads with active results
   useEffect(() => {
     run(DEMO_CASE_1, "karnataka");
   }, []);
@@ -87,13 +85,13 @@ export default function App() {
 
   return (
     <>
-      {/* Top Sticky Navigation */}
+      {/* Sticky Header */}
       <header className="top">
         <div className="brand-group">
-          <div className="brand-icon">⚖️</div>
+          <div className="brand-dot" />
           <div className="brand-titles">
-            <h1>HaqCheck</h1>
-            <span className="tagline">Your Haq, Cited · Cedar in Amazon Verified Permissions</span>
+            <span className="brand-name">HaqCheck</span>
+            <span className="brand-sub">Cedar in Amazon Verified Permissions</span>
           </div>
         </div>
 
@@ -117,42 +115,45 @@ export default function App() {
               if (resp && facts) fetchExplanations(resp, facts, l);
             }}
           >
-            <option value="en">🌐 English</option>
-            <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
-            <option value="kn">🟡🔴 ಕನ್ನಡ (Kannada)</option>
+            <option value="en">English</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
           </select>
 
-          <button className="ghost" onClick={() => setDrawer(true)}>
-            <span>{"</>"}</span> View Cedar Rules
+          <button className="pill-btn" onClick={() => setDrawer(true)}>
+            <span>Cedar Rules</span>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 13L13 3M13 3H5M13 3V11" />
+            </svg>
           </button>
         </div>
       </header>
 
-      {/* Hero Explainer Banner */}
-      <section className="hero-banner">
-        <div className="hero-inner">
-          <div>
-            <div className="hero-badge">AWS Bharat Builds Tour 2026 · Stop 01 "First Commit"</div>
-            <h2 className="hero-title">Appeal a citation, not a vibe.</h2>
-            <p className="hero-desc">
-              India&apos;s Social Security Rules 2026 (90-day threshold) and Karnataka High Court orders
-              (platform welfare cess) are in active conflict. HaqCheck uses Cedar to evaluate your statutory
-              rights deterministically, while Amazon Bedrock translates and explains.
-            </p>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-card">
+          <div className="hero-meta">
+            <span className="hero-pill">AWS Bharat Builds Tour 2026</span>
+            <span className="label">Stop 01 First Commit</span>
           </div>
 
-          <div className="hero-stats">
-            <div className="stat-chip">
-              <span>Decision Engine</span>
-              <strong>Cedar (AVP)</strong>
+          <h1 className="hero-title">Appeal a citation, not a vibe.</h1>
+          <p className="hero-desc">
+            Social-security rules for India&apos;s gig workers are divided between the Central Rules 2026 (90-day threshold) and the Karnataka High Court order (platform welfare fee). HaqCheck evaluates eligibility through formal Cedar policies; the language model only translates.
+          </p>
+
+          <div className="hero-stats-row">
+            <div className="stat-tag">
+              <span className="stat-tag-label">Decision Engine</span>
+              <span className="stat-tag-val">Cedar in AVP</span>
             </div>
-            <div className="stat-chip">
-              <span>LLM Role</span>
-              <strong>Explain Only</strong>
+            <div className="stat-tag">
+              <span className="stat-tag-label">Language Model</span>
+              <span className="stat-tag-val">Bedrock Nova Lite (Explain Only)</span>
             </div>
-            <div className="stat-chip">
-              <span>Cloud Cost</span>
-              <strong>$0.00 / Zero</strong>
+            <div className="stat-tag">
+              <span className="stat-tag-label">Architecture</span>
+              <span className="stat-tag-val">Serverless Scale-to-Zero</span>
             </div>
           </div>
         </div>
@@ -167,15 +168,15 @@ export default function App() {
           errors={errors}
         />
 
-        {/* Right Column: Results */}
+        {/* Right Column: Decisions */}
         <div className="results-column">
           {resp && (
-            <div className="results-meta-bar">
-              <span className="ruleset-tag">
-                📚 Active Rulebook: {resp.rulebookName}
+            <div className="results-meta">
+              <span className="active-rulebook-name">
+                Rulebook: {resp.rulebookName}
               </span>
-              <span className="engine-indicator">
-                <span className="engine-dot" />
+              <span className="avp-chip">
+                <span className="avp-dot" />
                 Version: {resp.rulesetVersion}
               </span>
             </div>
@@ -195,7 +196,7 @@ export default function App() {
         </div>
       </main>
 
-      {/* Slide-over Cedar Rulebook Drawer */}
+      {/* Cedar Rulebook Drawer */}
       <RulebookDrawer
         jurisdiction={jurisdiction}
         highlightIds={highlight}
