@@ -1,0 +1,36 @@
+{
+  "HaqCheck": {
+    "entityTypes": {
+      "Worker": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "state": { "type": "String" },
+            "daysWorkedLast12m": { "type": "Long" },
+            "eshramRegistered": { "type": "Boolean" },
+            "platforms": { "type": "Set", "element": { "type": "String" } },
+            "vehicle": { "type": "String" },
+            "age": { "type": "Long" }
+          }
+        }
+      },
+      "Benefit": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "name": { "type": "String" }
+          }
+        }
+      }
+    },
+    "actions": {
+      "claim": {
+        "appliesTo": {
+          "principalTypes": ["Worker"],
+          "resourceTypes": ["Benefit"],
+          "context": { "type": "Record", "attributes": {} }
+        }
+      }
+    }
+  }
+}
