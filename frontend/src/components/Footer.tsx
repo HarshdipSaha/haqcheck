@@ -9,7 +9,7 @@ export function Footer({ version }: Props) {
         <p style={{ margin: "0 0 8px 0", color: "var(--paper-75)" }}>
           <strong style={{ color: "var(--paper)" }}>Statutory Notice:</strong> HaqCheck evaluates which gazetted rule or high court order applies to the provided facts. It provides an eligibility estimate with legal citations, not binding legal counsel. Decisions are verified by <strong>Cedar in Amazon Verified Permissions</strong>; Amazon Bedrock translates and summarizes.
         </p>
-        <p style={{ margin: 0, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--paper-35)" }}>
+        <p style={{ margin: 0, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--paper-60)" }}>
           Rulebook Version: {version ?? "git-dev-preview"} · Schema: HaqCheck::Worker · Dual-Store Architecture
         </p>
       </div>
