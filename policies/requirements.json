@@ -1,0 +1,28 @@
+{
+  "benefits": {
+    "central_social_security": {
+      "name": "Central social security (Social Security Rules 2026)",
+      "requirements": [
+        { "policyId": "IN-SSR2026-90day", "label": "Registered on e-Shram", "field": "eshramRegistered", "op": "eq", "value": true },
+        { "policyId": "IN-SSR2026-90day", "label": "Days worked in the last 12 months", "field": "daysWorkedLast12m", "op": "gte", "value": 90 }
+      ],
+      "nextStep": {
+        "Eligible": "Log in to e-Shram and check that your platform has reported your work days; if not, raise a grievance on the e-Shram portal.",
+        "Not eligible": "Keep working and keep your platform app records. Re-check once you cross 90 days in the last 12 months. Register on e-Shram now if you have not.",
+        "Not applicable": "This rulebook does not cover this benefit."
+      }
+    },
+    "ka_welfare_fund": {
+      "name": "Karnataka platform-worker welfare fund",
+      "requirements": [
+        { "policyId": "KA-HC-2026-cess-scope", "label": "Working in Karnataka", "field": "state", "op": "eq", "value": "KA" },
+        { "policyId": "KA-HC-2026-cess-scope", "label": "On a notified platform (Zomato, Swiggy, Zepto, Urban Company)", "field": "platforms", "op": "containsAny", "value": ["zomato", "swiggy", "zepto", "urban_company"] }
+      ],
+      "nextStep": {
+        "Eligible": "Register with the Karnataka Platform-based Gig Workers Welfare Board and keep your platform ID handy; the fee is paid by the platform, not by you.",
+        "Not eligible": "You are in Karnataka but not on a platform named in the order. Check the board's website for additions.",
+        "Not applicable": "The Karnataka fund covers workers engaged in Karnataka only."
+      }
+    }
+  }
+}
