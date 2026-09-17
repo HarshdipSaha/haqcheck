@@ -1,0 +1,6 @@
+{
+  "rulebook": "central",
+  "displayName": "Central (Social Security Rules 2026)",
+  "policyDirs": ["common"],
+  "benefits": ["central_social_security"]
+}

@@ -1,0 +1,6 @@
+{
+  "rulebook": "karnataka",
+  "displayName": "Karnataka (Central + Karnataka HC order)",
+  "policyDirs": ["common", "karnataka"],
+  "benefits": ["central_social_security", "ka_welfare_fund"]
+}
