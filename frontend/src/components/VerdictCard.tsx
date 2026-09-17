@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Result, Why } from "../types";
 import { benefitName } from "../requirements";
 
@@ -16,10 +17,22 @@ const TONE = {
   "Not applicable": "na",
 } as const;
 
+function titleCase(v: string): string {
+  return v.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 function fmt(v: unknown): string {
-  if (Array.isArray(v)) return v.join(", ");
+  if (Array.isArray(v)) return v.map((x) => (typeof x === "string" ? titleCase(x) : String(x))).join(", ");
   if (typeof v === "boolean") return v ? "Yes" : "No";
   return String(v);
+}
+
+/** Requirement labels sometimes carry a parenthetical detail list that
+ * duplicates the value column; show the short form and keep the detail
+ * as a hover title instead of wrapping the checklist onto three lines. */
+function splitLabel(label: string): { text: string; detail?: string } {
+  const m = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(label);
+  return m ? { text: m[1], detail: m[2] } : { text: label };
 }
 
 export function VerdictCard({
@@ -39,15 +52,24 @@ export function VerdictCard({
   const daysRequired = typeof daysReq?.required === "number" ? daysReq.required : 90;
   const progressPercent = Math.min(100, Math.round((daysActual / daysRequired) * 100));
 
+  const [barWidth, setBarWidth] = useState(0);
+  useEffect(() => {
+    setBarWidth(0);
+    const id = requestAnimationFrame(() => setBarWidth(progressPercent));
+    return () => cancelAnimationFrame(id);
+  }, [progressPercent]);
+
   return (
     <section className={`card verdict-card ${tone} ${changed ? "changed" : ""}`}>
       {/* Header */}
       <div className="verdict-header">
         <div>
-          <span className="scheme-tag">
-            {result.benefitId.startsWith("ka_") ? "State Scheme (Karnataka)" : "Central Scheme (National)"}
-          </span>
-          <h3 className="verdict-title">{benefitName(result.benefitId)}</h3>
+          <h3 className="verdict-title">
+            {benefitName(result.benefitId)}{" "}
+            <span className="scheme-note">
+              — {result.benefitId.startsWith("ka_") ? "Karnataka" : "Central"}
+            </span>
+          </h3>
         </div>
 
         <span className={`badge ${tone}`}>
@@ -94,18 +116,20 @@ export function VerdictCard({
 
       {/* Requirements Checklist */}
       <ul className="requirements-list">
-        {why.map((w) => (
+        {why.map((w) => {
+          const { text: labelText, detail: labelDetail } = splitLabel(w.label);
+          return (
           <li key={w.label} className="req-item">
             <div className="req-left">
-              <span className="req-label">
+              <span className="req-label" title={labelDetail}>
                 <span className={`req-status-dot ${w.met ? "met" : "unmet"}`} />
-                {w.label}
+                {labelText}
               </span>
               {w.label.toLowerCase().includes("days worked") && (
                 <div className="progress-bar-wrap">
                   <div
                     className={`progress-fill ${w.met ? "met" : "unmet"}`}
-                    style={{ width: `${progressPercent}%` }}
+                    style={{ width: `${barWidth}%` }}
                   />
                 </div>
               )}
@@ -114,7 +138,8 @@ export function VerdictCard({
               <strong>{fmt(w.actual)}</strong> / {fmt(w.required)}
             </span>
           </li>
-        ))}
+          );
+        })}
       </ul>
 
       {/* Actionable Next Step */}

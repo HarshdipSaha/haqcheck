@@ -66,9 +66,6 @@ export function RulebookDrawer({
       <aside className="drawer-panel" role="dialog" aria-modal="true" aria-label="Cedar Rulebook Viewer">
         <div className="drawer-head">
           <div>
-            <div className="label" style={{ color: "var(--tangerine)", marginBottom: 4 }}>
-              Amazon Verified Permissions
-            </div>
             <h3 className="drawer-title">{book.displayName}</h3>
           </div>
           <button className="pill-btn" onClick={onClose}>
@@ -80,8 +77,8 @@ export function RulebookDrawer({
           </button>
         </div>
 
-        <p style={{ fontSize: 13.5, color: "var(--paper-75)", lineHeight: 1.7, marginBottom: 24 }}>
-          Authoritative Cedar policies stored in AWS Verified Permissions. Decisions are evaluated via mathematical satisfaction of <code>permit</code> and <code>forbid</code> clauses; the LLM is barred from deciding or modifying policies.
+        <p className="drawer-intro">
+          Cedar policies in Amazon Verified Permissions. Decided by <code>permit</code> / <code>forbid</code> satisfaction — the model can&apos;t sway it.
         </p>
 
         <div className="label" style={{ marginBottom: 10 }}>Common Policies (Central Rules 2026)</div>

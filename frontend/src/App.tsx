@@ -129,34 +129,15 @@ export default function App() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="hero">
-        <div className="hero-card">
-          <div className="hero-meta">
-            <span className="hero-pill">AWS Bharat Builds Tour 2026</span>
-            <span className="label">Stop 01 First Commit</span>
-          </div>
-
-          <h1 className="hero-title">Appeal a citation, not a vibe.</h1>
-          <p className="hero-desc">
-            Social-security rules for India&apos;s gig workers are divided between the Central Rules 2026 (90-day threshold) and the Karnataka High Court order (platform welfare fee). HaqCheck evaluates eligibility through formal Cedar policies; the language model only translates.
-          </p>
-
-          <div className="hero-stats-row">
-            <div className="stat-tag">
-              <span className="stat-tag-label">Decision Engine</span>
-              <span className="stat-tag-val">Cedar in AVP</span>
-            </div>
-            <div className="stat-tag">
-              <span className="stat-tag-label">Language Model</span>
-              <span className="stat-tag-val">Bedrock Nova Lite (Explain Only)</span>
-            </div>
-            <div className="stat-tag">
-              <span className="stat-tag-label">Architecture</span>
-              <span className="stat-tag-val">Serverless Scale-to-Zero</span>
-            </div>
-          </div>
-        </div>
+        <h1 className="hero-title">
+          Appeal a <span className="ink-mark">citation</span>, not a vibe.
+        </h1>
+        <p className="hero-desc">
+          Central Rules set a 90-day threshold. Karnataka&apos;s court order adds a welfare fee.
+          HaqCheck runs both as Cedar policy — the model only translates the verdict.
+        </p>
       </section>
 
       {/* Main Grid Layout */}
@@ -169,7 +150,9 @@ export default function App() {
         />
 
         {/* Right Column: Decisions */}
-        <div className="results-column">
+        <div className={`results-column ${busy ? "busy" : ""}`}>
+          {busy && <div className="scan-overlay" aria-hidden="true" />}
+
           {resp && (
             <div className="results-meta">
               <span className="active-rulebook-name">
@@ -182,17 +165,19 @@ export default function App() {
             </div>
           )}
 
-          {resp?.results.map((r) => (
-            <VerdictCard
-              key={r.benefitId}
-              result={r}
-              why={evaluateWhy(r.benefitId, facts)}
-              nextStep={nextStepFor(r.benefitId, r.verdict)}
-              explanation={explanations[r.benefitId]}
-              explaining={explaining}
-              changed={changed.has(r.benefitId)}
-            />
-          ))}
+          <div className="verdict-list" key={jurisdiction}>
+            {resp?.results.map((r) => (
+              <VerdictCard
+                key={r.benefitId}
+                result={r}
+                why={evaluateWhy(r.benefitId, facts)}
+                nextStep={nextStepFor(r.benefitId, r.verdict)}
+                explanation={explanations[r.benefitId]}
+                explaining={explaining}
+                changed={changed.has(r.benefitId)}
+              />
+            ))}
+          </div>
         </div>
       </main>
 

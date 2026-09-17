@@ -1,53 +1,55 @@
 /* ==========================================================================
    HaqCheck Design System
-   Inspired by harshdipsaha.tech & Impeccable Craft
-   Palette: Ink + Paper + Tangerine | Typography: Instrument Serif + Commissioner
+   One ink, one paper, one tangerine — derived from harshdipsaha.tech's
+   "Reading Room Light-Box" system, adapted from a slow-scroll Experience
+   surface to a task-first Operate surface (a form, a verdict, a citation).
+   The discipline carries over even where the pacing doesn't: no grey ramp,
+   one accent per view, depth from alpha and blur rather than shadow.
    ========================================================================== */
 
 :root {
   /* Core Palette */
-  --ink: #141216;
-  --ink-2: #1b181e;
-  --ink-3: #252129;
-  --ink-4: #312b36;
+  --ink: #171519;
+  --ink-2: #211e23;
+  --ink-3: #2f2b31;
 
-  --paper: #ede8e3;
-  --paper-90: rgba(237, 232, 227, 0.90);
-  --paper-75: rgba(237, 232, 227, 0.75);
-  --paper-55: rgba(237, 232, 227, 0.55);
-  --paper-35: rgba(237, 232, 227, 0.35);
-  --paper-15: rgba(237, 232, 227, 0.15);
-  --paper-8: rgba(237, 232, 227, 0.08);
+  --paper: #ebe5e1;
+  --paper-90: color-mix(in oklab, var(--paper) 90%, transparent);
+  --paper-75: color-mix(in oklab, var(--paper) 75%, transparent);
+  --paper-60: color-mix(in oklab, var(--paper) 60%, transparent);
+  --paper-55: color-mix(in oklab, var(--paper) 55%, transparent);
+  --paper-35: color-mix(in oklab, var(--paper) 35%, transparent);
+  --paper-16: color-mix(in oklab, var(--paper) 16%, transparent);
+  --paper-15: color-mix(in oklab, var(--paper) 15%, transparent);
+  --paper-8: color-mix(in oklab, var(--paper) 8%, transparent);
+  --paper-6: color-mix(in oklab, var(--paper) 6%, transparent);
 
-  /* Accents */
+  /* The one accent. Spent on a single primary action per view, on marks
+     under 8px (dots, focus rings, underlines), and nowhere else. */
   --tangerine: #f49752;
-  --tangerine-hover: #f7a86c;
+  --tangerine-lift: #f7a86c;
   --tangerine-glow: rgba(244, 151, 82, 0.22);
   --sunny: #f4e382;
 
-  /* Status Tokens (No Cheesy Emojis) */
+  /* Semantic status — the one deliberate departure from the source
+     palette. A verifier has to say "no", and "no" needs its own color. */
   --seafoam: #8ad7b6;
   --seafoam-bg: rgba(138, 215, 182, 0.12);
   --seafoam-border: rgba(138, 215, 182, 0.35);
 
-  --coral: #f87171;
-  --coral-bg: rgba(248, 113, 113, 0.12);
-  --coral-border: rgba(248, 113, 113, 0.35);
+  --coral: #f28a7d;
+  --coral-bg: rgba(242, 138, 125, 0.12);
+  --coral-border: rgba(242, 138, 125, 0.35);
 
-  --slate-subtle: #94a3b8;
-  --slate-bg: rgba(148, 163, 184, 0.10);
-  --slate-border: rgba(148, 163, 184, 0.25);
-
-  /* Borders & Surfaces */
-  --border-glass: rgba(237, 232, 227, 0.12);
-  --border-glass-hover: rgba(237, 232, 227, 0.24);
+  /* Borders */
+  --border-glass: var(--paper-16);
+  --border-glass-hover: color-mix(in oklab, var(--paper) 26%, transparent);
 
   /* Typography */
   --font-sans: "Commissioner", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
 
-  /* Easing */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-cubic: cubic-bezier(0.33, 1, 0.68, 1);
 
@@ -91,6 +93,31 @@ body {
   border-radius: 4px;
 }
 
+/* Custom scrollbar — the parts nobody draws still carry the system. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--paper-16) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--paper-16);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--ink);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--paper-35);
+}
+
 /* Typography Utilities */
 .display {
   font-family: var(--font-serif);
@@ -102,8 +129,8 @@ body {
 }
 
 .label {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.8125rem;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--paper-55);
@@ -114,6 +141,11 @@ body {
   border: 1px solid var(--border-glass);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+}
+
+.mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ==========================================================================
@@ -131,7 +163,7 @@ body {
   max-width: 1300px;
   margin: 0 auto;
   padding: 16px 28px;
-  background: rgba(20, 18, 22, 0.82);
+  background: color-mix(in oklab, var(--ink) 82%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-glass);
@@ -145,11 +177,10 @@ body {
 }
 
 .brand-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--tangerine);
-  box-shadow: 0 0 12px var(--tangerine);
   flex-shrink: 0;
 }
 
@@ -171,7 +202,7 @@ body {
 .brand-sub {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--paper-55);
   margin-top: 3px;
@@ -184,37 +215,55 @@ body {
   flex-wrap: wrap;
 }
 
-/* Segmented Pill Toggle */
+/* Segmented Pill Toggle — a sliding glass indicator, one accent-free move. */
 .toggle {
-  display: inline-flex;
+  position: relative;
+  display: flex;
   background: var(--paper-8);
   border: 1px solid var(--border-glass);
   padding: 3px;
   border-radius: var(--radius-full);
-  gap: 2px;
+}
+
+.toggle::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  background: var(--paper-15);
+  border-radius: var(--radius-full);
+  transition: transform 320ms var(--ease-cubic);
+}
+
+.toggle[data-active="central"]::before {
+  transform: translateX(100%);
 }
 
 .toggle button {
-  padding: 6px 14px;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding: 8px 16px;
   border: 0;
   border-radius: var(--radius-full);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--paper-75);
   background: transparent;
   cursor: pointer;
-  transition: all var(--transition-fast, 180ms) var(--ease-cubic);
+  white-space: nowrap;
+  transition: color 220ms var(--ease-cubic);
 }
 
 .toggle button:hover:not(:disabled) {
   color: var(--paper);
-  background: var(--paper-8);
 }
 
 .toggle button.on {
-  background: var(--paper-15);
-  color: #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  color: var(--paper);
+  font-weight: 600;
 }
 
 .toggle button:disabled {
@@ -224,11 +273,11 @@ body {
 
 /* Glass Select */
 .lang-select {
-  padding: 7px 14px;
+  padding: 8px 16px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-glass);
   background: var(--ink-2);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--paper);
   cursor: pointer;
@@ -236,7 +285,7 @@ body {
   transition: border-color 200ms var(--ease-cubic);
 }
 
-.lang-select:focus {
+.lang-select:focus-visible {
   border-color: var(--tangerine);
 }
 
@@ -248,19 +297,18 @@ body {
   border-radius: var(--radius-full);
   font-weight: 500;
   white-space: nowrap;
-  padding: 7px 16px;
-  font-size: 13px;
+  padding: 8px 16px;
+  font-size: 14px;
   cursor: pointer;
   background: var(--paper-8);
   color: var(--paper);
   border: 1px solid var(--border-glass);
-  transition: all 220ms var(--ease-cubic);
+  transition: background-color 220ms var(--ease-cubic), border-color 220ms var(--ease-cubic), transform 220ms var(--ease-cubic);
 }
 
 .pill-btn:hover {
   background: var(--paper-15);
   border-color: var(--border-glass-hover);
-  transform: translateY(-1px);
 }
 
 .pill-btn:active {
@@ -275,106 +323,66 @@ body {
 }
 
 .pill-btn.accent:hover {
-  background: var(--tangerine-hover);
+  background: var(--tangerine-lift);
 }
 
 /* ==========================================================================
-   Hero Section
+   Hero — the headline is the object; nothing else competes for the eye.
    ========================================================================== */
 
 .hero {
   max-width: 1300px;
-  margin: 32px auto 0;
+  margin: 56px auto 8px;
   padding: 0 28px;
 }
 
-.hero-card {
-  position: relative;
-  background: linear-gradient(135deg, var(--ink-2) 0%, rgba(27, 24, 30, 0.8) 100%);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
-  padding: 36px 40px;
-  overflow: hidden;
-}
-
-.hero-card::before {
-  content: "";
-  position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, var(--tangerine-glow) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.hero-pill {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--tangerine);
-  background: rgba(244, 151, 82, 0.1);
-  border: 1px solid rgba(244, 151, 82, 0.25);
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-}
-
 .hero-title {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem);
   font-weight: 400;
   letter-spacing: -0.03em;
   line-height: 1.05;
   color: var(--paper);
+  max-width: 20ch;
+  animation: revealBlur 700ms var(--ease-cubic) both;
+}
+
+.ink-mark {
+  position: relative;
+  white-space: nowrap;
+}
+
+.ink-mark::after {
+  content: "";
+  position: absolute;
+  left: -0.02em;
+  right: -0.02em;
+  bottom: 0.08em;
+  height: 0.05em;
+  background: var(--tangerine);
+  transform-origin: left;
+  animation: underlineDraw 650ms var(--ease-expo) 520ms both;
 }
 
 .hero-desc {
-  margin: 0 0 24px;
-  font-size: 15px;
+  margin: 0;
+  font-size: 15.5px;
   color: var(--paper-75);
-  max-width: 760px;
-  line-height: 1.7;
+  max-width: 62ch;
+  line-height: 1.65;
+  animation: revealBlur 700ms var(--ease-cubic) 90ms both;
 }
 
-.hero-stats-row {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
+@keyframes revealBlur {
+  from { opacity: 0; filter: blur(6px); transform: translate(-10px, -8px); }
+  to { opacity: 1; filter: blur(0); transform: translate(0, 0); }
 }
 
-.stat-tag {
-  background: var(--ink-3);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-md);
-  padding: 10px 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-tag-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--paper-55);
-  margin-bottom: 3px;
-}
-
-.stat-tag-val {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--paper);
+@keyframes underlineDraw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 /* ==========================================================================
@@ -386,7 +394,7 @@ body {
   grid-template-columns: 1fr 1.25fr;
   gap: 28px;
   max-width: 1300px;
-  margin: 28px auto 60px;
+  margin: 36px auto 60px;
   padding: 0 28px;
   align-items: start;
 }
@@ -397,13 +405,16 @@ body {
     gap: 24px;
     padding: 0 20px;
   }
-  .hero-card {
-    padding: 24px 20px;
+  .hero {
+    margin-top: 40px;
+    padding: 0 20px;
   }
 }
 
+
 /* ==========================================================================
-   Panels & Cards
+   Panels & Cards — flat surfaces, alpha borders, no shadow. Depth is a
+   step in lightness (ink -> ink-2), never a drop shadow.
    ========================================================================== */
 
 .card {
@@ -470,38 +481,34 @@ body {
 }
 
 .preset-chip {
-  padding: 6px 12px;
+  padding: 7px 14px;
   background: var(--paper-8);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-full);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 500;
   color: var(--paper-90);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 180ms var(--ease-cubic);
+  transition: background-color 180ms var(--ease-cubic), border-color 180ms var(--ease-cubic), transform 120ms var(--ease-cubic);
 }
 
 .preset-chip:hover {
   background: var(--paper-15);
   border-color: var(--border-glass-hover);
-  transform: translateY(-1px);
+}
+
+.preset-chip:active {
+  transform: scale(0.97);
 }
 
 .preset-chip.active {
-  background: rgba(244, 151, 82, 0.18);
-  border-color: var(--tangerine);
-  color: var(--tangerine);
+  background: var(--paper-15);
+  border-color: var(--border-glass-hover);
+  color: var(--paper);
   font-weight: 600;
-}
-
-.preset-num {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  color: inherit;
 }
 
 /* Form Inputs */
@@ -530,7 +537,7 @@ body {
   font-size: 14px;
   color: var(--paper);
   outline: none;
-  transition: all 200ms var(--ease-cubic);
+  transition: border-color 200ms var(--ease-cubic), box-shadow 200ms var(--ease-cubic);
 }
 
 .form-group input[type="number"]:focus,
@@ -654,9 +661,10 @@ body {
   background: var(--paper-8);
   font-size: 13px;
   font-weight: 500;
+  white-space: nowrap;
   cursor: pointer;
   user-select: none;
-  transition: all 180ms var(--ease-cubic);
+  transition: background-color 180ms var(--ease-cubic), border-color 180ms var(--ease-cubic), transform 120ms var(--ease-cubic);
 }
 
 .platform-pill:hover {
@@ -664,10 +672,14 @@ body {
   border-color: var(--border-glass-hover);
 }
 
+.platform-pill:active {
+  transform: scale(0.97);
+}
+
 .platform-pill.selected {
-  background: rgba(244, 151, 82, 0.15);
-  border-color: var(--tangerine);
-  color: var(--tangerine);
+  background: var(--paper-15);
+  border-color: var(--border-glass-hover);
+  color: var(--paper);
   font-weight: 600;
 }
 
@@ -675,15 +687,9 @@ body {
   display: none;
 }
 
-.notified-tag {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 2px 6px;
-  background: var(--tangerine);
-  color: var(--ink);
-  border-radius: var(--radius-full);
-  margin-left: auto;
+.platform-check {
+  color: var(--tangerine);
+  flex-shrink: 0;
 }
 
 /* Form Action Submit */
@@ -702,14 +708,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 4px 20px var(--tangerine-glow);
-  transition: all 220ms var(--ease-cubic);
+  transition: background-color 220ms var(--ease-cubic), transform 220ms var(--ease-cubic);
 }
 
 .submit-btn:hover:not(:disabled) {
-  background: var(--tangerine-hover);
+  background: var(--tangerine-lift);
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(244, 151, 82, 0.32);
 }
 
 .submit-btn:active:not(:disabled) {
@@ -721,14 +725,57 @@ body {
   cursor: not-allowed;
 }
 
+.spinner {
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ==========================================================================
    Results & Verdict Cards
    ========================================================================== */
 
 .results-column {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.results-column.busy .verdict-card,
+.results-column.busy .results-meta {
+  opacity: 0.45;
+  filter: saturate(0.6);
+  transition: opacity 200ms var(--ease-cubic), filter 200ms var(--ease-cubic);
+  pointer-events: none;
+}
+
+.scan-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.scan-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--tangerine), transparent);
+  animation: scanSweep 1.5s ease-in-out infinite;
+}
+
+@keyframes scanSweep {
+  0% { top: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
 }
 
 .results-meta {
@@ -755,10 +802,11 @@ body {
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
-  color: var(--tangerine);
-  background: rgba(244, 151, 82, 0.1);
-  border: 1px solid rgba(244, 151, 82, 0.25);
+  color: var(--paper-75);
+  background: var(--paper-8);
+  border: 1px solid var(--border-glass);
   padding: 2px 8px;
   border-radius: var(--radius-full);
 }
@@ -770,37 +818,58 @@ body {
   background: var(--tangerine);
 }
 
-/* Individual Verdict Card */
+/* Verdict card list — one authored entrance per jurisdiction switch or
+   first load; a plain resubmit in the same rulebook leaves settled cards
+   alone and lets the changed-pulse below carry the signal instead. */
+.verdict-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.verdict-list > .verdict-card {
+  animation: cardIn 620ms var(--ease-cubic) both;
+}
+
+.verdict-list > .verdict-card:nth-child(1) { animation-delay: 0ms; }
+.verdict-list > .verdict-card:nth-child(2) { animation-delay: 70ms; }
+.verdict-list > .verdict-card:nth-child(3) { animation-delay: 140ms; }
+.verdict-list > .verdict-card:nth-child(4) { animation-delay: 210ms; }
+.verdict-list > .verdict-card:nth-child(n+5) { animation-delay: 260ms; }
+
+@keyframes cardIn {
+  from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* Individual Verdict Card. Status reads through a faint corner tint, not a
+   colored border — "not applicable" carries no tint at all, which is the
+   point: neutral is the absence of color, not a fourth grey. */
 .verdict-card {
   position: relative;
   background: var(--ink-2);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 26px;
-  transition: all 250ms var(--ease-cubic);
+  transition: border-color 250ms var(--ease-cubic), background-color 400ms var(--ease-cubic);
   overflow: hidden;
 }
 
-.verdict-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 4px;
+.verdict-card.ok {
+  background: linear-gradient(160deg, color-mix(in oklab, var(--seafoam) 7%, var(--ink-2)) 0%, var(--ink-2) 55%);
 }
 
-.verdict-card.ok::before { background: var(--seafoam); }
-.verdict-card.no::before { background: var(--coral); }
-.verdict-card.na::before { background: var(--slate-subtle); }
+.verdict-card.no {
+  background: linear-gradient(160deg, color-mix(in oklab, var(--coral) 7%, var(--ink-2)) 0%, var(--ink-2) 55%);
+}
 
 .verdict-card.changed {
-  animation: flashBorder 1.2s var(--ease-expo);
+  animation: changedFlash 1.1s var(--ease-expo);
 }
 
-@keyframes flashBorder {
-  0% { box-shadow: 0 0 0 4px var(--tangerine); }
-  100% { box-shadow: none; }
+@keyframes changedFlash {
+  0% { border-color: var(--tangerine); background-color: color-mix(in oklab, var(--tangerine) 10%, var(--ink-2)); }
+  100% { border-color: var(--border-glass); }
 }
 
 .verdict-header {
@@ -815,21 +884,23 @@ body {
   margin: 0;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 400;
   color: var(--paper);
   letter-spacing: -0.02em;
+  line-height: 1.3;
 }
 
-.scheme-tag {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.scheme-note {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
   color: var(--paper-55);
 }
 
-/* Status Badges */
+/* Status Badges — the "stamp." One settle animation on arrival, one
+   distinct re-trigger when a verdict flips under the same rulebook. */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -841,6 +912,24 @@ body {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   white-space: nowrap;
+  flex-shrink: 0;
+  animation: stampIn 480ms var(--ease-expo) both;
+}
+
+.verdict-card.changed .badge {
+  animation: stampInRepeat 480ms var(--ease-expo);
+}
+
+@keyframes stampIn {
+  0% { opacity: 0; transform: scale(1.3) rotate(-8deg); }
+  60% { opacity: 1; transform: scale(0.96) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes stampInRepeat {
+  0% { opacity: 0.4; transform: scale(1.3) rotate(-8deg); }
+  60% { opacity: 1; transform: scale(0.96) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
 .badge.ok {
@@ -856,18 +945,18 @@ body {
 }
 
 .badge.na {
-  background: var(--slate-bg);
-  color: var(--slate-subtle);
-  border: 1px solid var(--slate-border);
+  background: var(--paper-6);
+  color: var(--paper-55);
+  border: 1px solid var(--border-glass);
 }
 
-/* Citation Box */
+/* Citation — a quote from the source, not another boxed panel. One neutral
+   hairline on the left is the standard blockquote device, not the banned
+   status stripe (it never carries ok/no/na meaning). */
 .citation-box {
-  background: var(--ink-3);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-md);
-  padding: 14px;
-  margin-bottom: 18px;
+  border-left: 2px solid var(--border-glass-hover);
+  padding: 2px 0 2px 16px;
+  margin-bottom: 20px;
 }
 
 .citation-meta {
@@ -875,13 +964,16 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .rule-id {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   font-weight: 600;
-  color: var(--tangerine);
+  color: var(--paper);
 }
 
 .rule-effect {
@@ -897,23 +989,24 @@ body {
   line-height: 1.6;
 }
 
-/* Requirements & Checklist */
+/* Requirements & Checklist — a plain hairline-divided list, not a stack of
+   boxes-in-a-box. The status dot and values still carry the same evidence;
+   the panel treatment was doing no work but adding visual weight. */
 .requirements-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 18px 0;
+  margin: 0 0 20px 0;
+  border-top: 1px solid var(--border-glass);
 }
 
 .req-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--ink-3);
-  border: 1px solid var(--border-glass);
+  padding: 12px 2px;
+  border-bottom: 1px solid var(--border-glass);
   font-size: 13px;
-  margin-bottom: 8px;
+  gap: 12px;
 }
 
 .req-left {
@@ -921,6 +1014,7 @@ body {
   flex-direction: column;
   gap: 4px;
   flex: 1;
+  min-width: 0;
 }
 
 .req-label {
@@ -943,9 +1037,26 @@ body {
 
 .req-values {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   color: var(--paper-55);
   padding-left: 15px;
+  text-align: right;
+  max-width: 50%;
+}
+
+@media (max-width: 480px) {
+  .req-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .req-values {
+    max-width: 100%;
+    padding-left: 15px;
+    text-align: left;
+  }
 }
 
 /* Progress Bar */
@@ -962,7 +1073,7 @@ body {
 .progress-fill {
   height: 100%;
   border-radius: var(--radius-full);
-  transition: width 400ms var(--ease-expo);
+  transition: width 500ms var(--ease-expo);
 }
 
 .progress-fill.met { background: var(--seafoam); }
@@ -1000,6 +1111,8 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .explanation-badge {
@@ -1013,9 +1126,9 @@ body {
 .bedrock-pill {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--tangerine);
-  background: rgba(244, 151, 82, 0.1);
-  border: 1px solid rgba(244, 151, 82, 0.25);
+  color: var(--paper-60);
+  background: var(--paper-8);
+  border: 1px solid var(--border-glass);
   padding: 2px 8px;
   border-radius: var(--radius-full);
 }
@@ -1023,13 +1136,14 @@ body {
 .explanation-body {
   font-size: 13.5px;
   line-height: 1.7;
-  color: var(--paper-80);
+  color: var(--paper-90);
   margin: 0;
-  border-left: 2px solid var(--tangerine);
+  border-left: 2px solid var(--border-glass);
   padding-left: 14px;
 }
 
-/* Skeleton Loading Shimmer */
+/* Skeleton Loading Shimmer — the one legitimate loop, since it marks an
+   indeterminate wait rather than decorating a static state. */
 .skeleton-box {
   display: flex;
   flex-direction: column;
@@ -1075,9 +1189,8 @@ body {
   color: var(--paper);
   overflow-y: auto;
   padding: 32px;
-  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.5);
   z-index: 61;
-  animation: slideLeft 260ms var(--ease-expo);
+  animation: slideLeft 320ms var(--ease-expo);
 }
 
 @keyframes slideLeft {
@@ -1108,6 +1221,21 @@ body {
   color: var(--paper);
 }
 
+.drawer-intro {
+  font-size: 13.5px;
+  color: var(--paper-75);
+  line-height: 1.7;
+  margin: 0 0 24px;
+}
+
+.drawer-intro code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--paper-8);
+  padding: 0.1em 0.4em;
+  border-radius: 0.3em;
+}
+
 .cedar-card {
   background: var(--ink);
   border: 1px solid var(--border-glass);
@@ -1119,12 +1247,13 @@ body {
   line-height: 1.6;
   overflow-x: auto;
   color: var(--paper-90);
-  transition: all 200ms var(--ease-cubic);
+  transition: border-color 200ms var(--ease-cubic), background-color 200ms var(--ease-cubic);
+  animation: cardIn 500ms var(--ease-cubic) both;
 }
 
 .cedar-card.hit {
   border-color: var(--tangerine);
-  box-shadow: 0 0 20px var(--tangerine-glow);
+  background: color-mix(in oklab, var(--tangerine) 6%, var(--ink));
 }
 
 .cedar-card.dim {
@@ -1138,6 +1267,8 @@ body {
   font-weight: 500;
   display: flex;
   justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .cedar-active-badge {
@@ -1175,6 +1306,12 @@ body {
   gap: 10px;
 }
 
+.foot-credit {
+  margin: 10px 0 0;
+  font-size: 11px;
+  color: var(--paper-35);
+}
+
 .cost-tag {
   display: inline-flex;
   align-items: center;
@@ -1207,4 +1344,50 @@ body {
 
 .github-anchor:hover {
   color: var(--tangerine);
+}
+
+/* ==========================================================================
+   Motion safety — every animated component here has a static fallback.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-title,
+  .hero-desc,
+  .verdict-list > .verdict-card,
+  .verdict-card.changed,
+  .badge,
+  .verdict-card.changed .badge,
+  .cedar-card,
+  .spinner,
+  .ink-mark::after {
+    animation: none !important;
+  }
+
+  .hero-title,
+  .hero-desc,
+  .verdict-list > .verdict-card,
+  .cedar-card,
+  .badge {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .ink-mark::after {
+    transform: scaleX(1);
+  }
+
+  .scan-overlay::after {
+    animation: none;
+    top: 50%;
+    opacity: 0.5;
+  }
+
+  .submit-btn:hover:not(:disabled) {
+    transform: none;
+  }
 }

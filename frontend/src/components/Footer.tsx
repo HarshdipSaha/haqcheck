@@ -7,10 +7,13 @@ export function Footer({ version }: Props) {
     <footer className="foot">
       <div className="foot-left">
         <p style={{ margin: "0 0 8px 0", color: "var(--paper-75)" }}>
-          <strong style={{ color: "var(--paper)" }}>Statutory Notice:</strong> HaqCheck evaluates which gazetted rule or high court order applies to the provided facts. It provides an eligibility estimate with legal citations, not binding legal counsel. Decisions are verified by <strong>Cedar in Amazon Verified Permissions</strong>; Amazon Bedrock translates and summarizes.
+          <strong style={{ color: "var(--paper)" }}>Not legal advice.</strong> An eligibility estimate with citations. Cedar in Amazon Verified Permissions decides; Bedrock only translates.
         </p>
-        <p style={{ margin: 0, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--paper-60)" }}>
-          Rulebook Version: {version ?? "git-dev-preview"} · Schema: HaqCheck::Worker · Dual-Store Architecture
+        <p className="mono-num" style={{ margin: 0, fontSize: 11, color: "var(--paper-60)" }}>
+          Rulebook {version ?? "git-dev-preview"} · HaqCheck::Worker
+        </p>
+        <p className="foot-credit">
+          Built at WeMakeDevs × AWS Bharat Builds Tour, Stop 01 — First Commit, Sept 2026.
         </p>
       </div>
 

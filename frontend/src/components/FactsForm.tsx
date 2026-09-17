@@ -88,37 +88,34 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
       }}
     >
       <div className="form-header">
-        <h2 className="form-title">Worker Profile & Work History</h2>
-        <p className="form-sub">Enter your platform work records to evaluate statutory entitlement via Cedar policies.</p>
+        <h2 className="form-title">Worker Profile</h2>
+        <p className="form-sub">Your platform work history, checked against both rulebooks.</p>
       </div>
 
       {/* Preset Scenarios */}
       <div className="presets-section">
-        <span className="presets-label">Select Test Scenario</span>
+        <span className="presets-label">Try a Scenario</span>
         <div className="presets-list">
           <button
             type="button"
             className={`preset-chip ${activePreset === 1 ? "active" : ""}`}
             onClick={() => applyPreset(1, DEMO_CASE_1)}
           >
-            <span className="preset-num">01</span>
-            <span>Bengaluru 73d (The Dispute)</span>
+            Bengaluru, 73d — the dispute
           </button>
           <button
             type="button"
             className={`preset-chip ${activePreset === 2 ? "active" : ""}`}
             onClick={() => applyPreset(2, DEMO_CASE_2)}
           >
-            <span className="preset-num">02</span>
-            <span>Pune 120d (Out-of-State)</span>
+            Pune, 120d
           </button>
           <button
             type="button"
             className={`preset-chip ${activePreset === 3 ? "active" : ""}`}
             onClick={() => applyPreset(3, DEMO_CASE_3)}
           >
-            <span className="preset-num">03</span>
-            <span>90d Statutory Boundary</span>
+            90-day boundary
           </button>
         </div>
       </div>
@@ -129,6 +126,7 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
         <select
           id="field-state"
           value={f.state}
+          aria-describedby={errors.state ? "field-state-error" : undefined}
           onChange={(e) => {
             setActivePreset(0);
             set("state", e.target.value);
@@ -140,7 +138,7 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
             </option>
           ))}
         </select>
-        {errors.state && <small className="err">{errors.state}</small>}
+        {errors.state && <small id="field-state-error" className="err">{errors.state}</small>}
       </div>
 
       {/* Days Worked */}
@@ -149,18 +147,18 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
         <input
           id="field-days"
           type="number"
+          inputMode="numeric"
           min={0}
           max={366}
           value={f.daysWorkedLast12m}
+          aria-describedby="field-days-help field-days-error"
           onChange={(e) => {
             setActivePreset(0);
             set("daysWorkedLast12m", Number(e.target.value));
           }}
         />
-        <span className="input-helper">
-          Central Rules (IN-SSR2026-90day) mandate a minimum threshold of 90 days.
-        </span>
-        {errors.daysWorkedLast12m && <small className="err">{errors.daysWorkedLast12m}</small>}
+        <span id="field-days-help" className="input-helper">Central Rules require 90 days minimum.</span>
+        {errors.daysWorkedLast12m && <small id="field-days-error" className="err">{errors.daysWorkedLast12m}</small>}
       </div>
 
       {/* e-Shram Registration Toggle */}
@@ -173,7 +171,7 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
       >
         <div className="switch-content">
           <span className="switch-title">e-Shram National Registration</span>
-          <span className="switch-desc">Mandatory national registration on the Shram Suvidha portal</span>
+          <span className="switch-desc">Via the Shram Suvidha portal</span>
         </div>
         <div className={`custom-switch ${f.eshramRegistered ? "on" : ""}`}>
           <div className="switch-handle" />
@@ -190,6 +188,7 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
               <label
                 key={p.id}
                 className={`platform-pill ${isSelected ? "selected" : ""}`}
+                title={p.notified ? `${p.label} is a notified aggregator under the Karnataka Act` : undefined}
                 onClick={(e) => {
                   e.preventDefault();
                   setActivePreset(0);
@@ -197,8 +196,12 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
                 }}
               >
                 <input type="checkbox" checked={isSelected} readOnly />
+                {isSelected && (
+                  <svg className="platform-check" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="3.5 8.5 6.5 11.5 12.5 5" />
+                  </svg>
+                )}
                 <span>{p.label}</span>
-                {p.notified && <span className="notified-tag">NOTIFIED</span>}
               </label>
             );
           })}
@@ -223,7 +226,7 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
           <option value="four_wheeler">Four-Wheeler (Car / Light Commercial)</option>
           <option value="none">None / Walking</option>
         </select>
-        <span className="input-helper">Used for Karnataka state welfare cess rate calculation.</span>
+        <span className="input-helper">Sets the Karnataka welfare cess rate.</span>
       </div>
 
       {/* Age */}
@@ -232,23 +235,32 @@ export function FactsForm({ onSubmit, busy, errors = {} }: Props) {
         <input
           id="field-age"
           type="number"
+          inputMode="numeric"
           min={18}
           max={80}
           value={f.age}
+          aria-describedby={errors.age ? "field-age-error" : undefined}
           onChange={(e) => {
             setActivePreset(0);
             set("age", Number(e.target.value));
           }}
         />
-        {errors.age && <small className="err">{errors.age}</small>}
+        {errors.age && <small id="field-age-error" className="err">{errors.age}</small>}
       </div>
 
       {/* Submit Button */}
       <button type="submit" className="submit-btn" disabled={busy}>
-        <span>{busy ? "Evaluating Policy Engine…" : "Verify Entitlements with Cedar"}</span>
-        <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none">
-          <path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <span>{busy ? "Evaluating…" : "Verify with Cedar"}</span>
+        {busy ? (
+          <svg className="spinner" aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />
+            <path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        ) : (
+          <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none">
+            <path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
       </button>
     </form>
   );

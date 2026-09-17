@@ -8,7 +8,7 @@ interface Props {
 
 export function JurisdictionToggle({ value, onChange, disabled }: Props) {
   return (
-    <div className="toggle" role="tablist" aria-label="Jurisdiction Rulebook Selector">
+    <div className="toggle" data-active={value} role="tablist" aria-label="Jurisdiction Rulebook Selector">
       <button
         role="tab"
         aria-selected={value === "karnataka"}
@@ -17,7 +17,7 @@ export function JurisdictionToggle({ value, onChange, disabled }: Props) {
         onClick={() => onChange("karnataka")}
         title="Karnataka State Platform-Based Gig Workers Act overlay + Central Rules"
       >
-        Karnataka Rulebook (Overlay)
+        Karnataka
       </button>
       <button
         role="tab"
@@ -27,7 +27,7 @@ export function JurisdictionToggle({ value, onChange, disabled }: Props) {
         onClick={() => onChange("central")}
         title="Social Security (Central) Rules 2026 only"
       >
-        Central Rulebook
+        Central
       </button>
     </div>
   );
