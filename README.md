@@ -1,51 +1,31 @@
 <div align="center">
 
-# ⚖️ HaqCheck
-
-### your haq, cited.
-
-Which Indian gig-worker welfare rule applies to you — decided by **Cedar** in Amazon Verified Permissions, cited to the clause. The LLM only explains the verdict. It never decides.
-
-[![AWS Verified Permissions](https://img.shields.io/badge/AWS-Verified%20Permissions-FF9900?style=flat-square&logo=amazonaws&logoColor=white)](https://aws.amazon.com/verified-permissions/)
-[![Cedar](https://img.shields.io/badge/Policy%20Engine-Cedar-232F3E?style=flat-square)](https://www.cedarpolicy.com/)
-[![Amazon Bedrock](https://img.shields.io/badge/Amazon%20Bedrock-Nova%20Lite-8C4FFF?style=flat-square&logo=amazonaws&logoColor=white)](https://aws.amazon.com/bedrock/)
-[![AWS Builder Center](https://img.shields.io/badge/AWS%20Builder%20Center-Article%20Published-FF9900?style=flat-square&logo=amazonwebservices&logoColor=white)](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)](backend/requirements-dev.txt)
-[![Tests](https://img.shields.io/badge/unit%20tests-25%20passing-3fb950?style=flat-square)](backend/tests/)
-[![Hackathon](https://img.shields.io/badge/WeMakeDevs%20%C3%97%20AWS-Bharat%20Builds%20Tour-0d1117?style=flat-square)]()
-
-**[The problem](#the-problem)** · **[How it works](#how-it-works)** · **[Live Demo](https://main.duuh4vgnn5xa3.amplifyapp.com/)** · **[Architecture Blog](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)** · **[Try it](#try-it)**
-
-</div>
-
 <div align="center">
   <img src="docs/assets/demo.gif" alt="Switching worker scenarios in HaqCheck: a 73-day case comes back Not Eligible under Central Rules, crossing the 90-day threshold flips it to Eligible with a fresh citation, and the Cedar Rules drawer shows the actual policy — IN-SSR2026-90day — that made the call, highlighted as the active determining policy." width="880">
 </div>
 
 ---
 
-## The problem
+## What it is
 
-Two Indian welfare regimes for gig workers now overlap, and they don't agree.
+Gig workers in India are currently caught between overlapping and confusing sets of rules:
 
-- **Social Security (Central) Rules, 2026** — a 90-day work threshold on a single aggregator, enforced through e‑Shram registration.
-- **Karnataka High Court, July 2026** — orders Swiggy, Zomato, Zepto and Urban Company to pay into a separate state welfare fund.
+- **Central Government Rules (2026):** Requires working 90 days on a single app to get benefits.
+- **Karnataka State Rules (2026):** Requires apps to pay into a separate welfare fund.
 
-> Nothing tells a worker which regime actually applies to them. Existing tools are directories, not verifiers. HaqCheck is a verifier — and it shows its work.
+It is nearly impossible for an average worker to know which rule applies to their specific situation. **HaqCheck** solves this by taking a worker's basic details (like days worked and location) and calculating exactly what they are eligible for.
 
-## How it works
+Instead of relying on AI to guess the law, HaqCheck uses a deterministic rules engine to cite the exact legal statute, and then uses AI solely to translate that legal verdict into simple, plain language (English, Hindi, or Kannada) so workers can easily understand their rights.
 
-**Cedar decides. The LLM only explains.**
+## How it works (Under the hood)
 
-1. **Policies** — two Cedar rulebooks (Central, and Karnataka = Central + overlay), hand-authored with `@id` / `@source` / `@confidence` annotations, live in [`policies/`](policies/).
-2. **Sync** — `sync_policies.py` pushes them to two Amazon Verified Permissions policy stores and records a policy-id → citation map.
-3. **Evaluate** — `/evaluate` (Lambda) calls `IsAuthorized` per benefit with inline entities, and maps ALLOW/DENY + the determining policy to **Eligible / Not eligible / Not applicable** — each verdict carries the rule that decided it. Every case is logged to DynamoDB with the rulebook version.
-4. **Explain** — `/explain` (Lambda, Strands Agents SDK on Bedrock Nova Lite) restates the verdict and its cited rule in English, Hindi or Kannada. A digit guardrail rejects any output that invents a number.
-5. **Frontend** — Amplify-hosted form, verdict cards, jurisdiction toggle, rulebook drawer.
+To ensure we **never** give false legal advice, the architecture is strictly separated into two parts:
 
-> The LLM never makes the call. It receives an already-determined verdict and a citation, and puts it into plain language — it cannot override Cedar, and it's not allowed to invent a number that isn't in the source rule.
+**The Rules Engine decides. The AI only explains.**
 
-## Built on AWS
+1. **Strict Rules (Cedar):** The actual laws are written into hardcoded policies (using Cedar and Amazon Verified Permissions). This acts as the "judge" and makes a 100% accurate YES or NO decision based on the law.
+2. **AI Translation (Amazon Bedrock):** Once the rules engine makes a decision, we pass that decision to an AI. The AI's *only* job is to translate that legal verdict into plain language that the user can understand. It is strictly blocked from making up rules or changing numbers.
+3. **Frontend & Backend (AWS):** An easy-to-use web app powered by AWS serverless technology connects everything together.
 
 <p align="left">
   <a href="https://aws.amazon.com/verified-permissions/"><img src="https://img.shields.io/badge/Amazon%20Verified%20Permissions-Cedar-DD344C?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="Amazon Verified Permissions (Cedar)" /></a>
@@ -56,14 +36,14 @@ Two Indian welfare regimes for gig workers now overlap, and they don't agree.
   <a href="https://aws.amazon.com/amplify/"><img src="https://img.shields.io/badge/AWS%20Amplify-Hosting-FF9900?style=for-the-badge&logo=awsamplify&logoColor=white" alt="AWS Amplify Hosting" /></a>
 </p>
 
-| AWS Service | Component & Architecture Role |
-| :--- | :--- |
+| AWS Service                                   | Component & Architecture Role                                                                                                                         |
+| :-------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Amazon Verified Permissions** (Cedar) | Evaluates eligibility deterministically using strict Cedar policy sets (`central` and `karnataka`) with exact `@source` legal clause citations. |
-| **AWS Lambda** | Python 3.12 serverless handlers (`/evaluate` and `/explain`) scaling to zero with on-demand invocation. |
-| **Amazon API Gateway** (HTTP API) | High-throughput, low-latency API gateway routing client evaluation and explanation requests with CORS enabled. |
-| **Amazon DynamoDB** | On-demand table (`CasesTable`) storing immutable ruleset versions (`RULESET#<rb>`) and case determination logs with TTL. |
-| **Amazon Bedrock** (Nova Lite) | Converts structured Cedar verdicts into plain-language summaries (English, Hindi, Kannada) through Strands Agents SDK with strict digit guardrails. |
-| **AWS Amplify Hosting** | Continuous integration and global CDN hosting for the Vite/React single-page application. |
+| **AWS Lambda**                          | Python 3.12 serverless handlers (`/evaluate` and `/explain`) scaling to zero with on-demand invocation.                                           |
+| **Amazon API Gateway** (HTTP API)       | High-throughput, low-latency API gateway routing client evaluation and explanation requests with CORS enabled.                                        |
+| **Amazon DynamoDB**                     | On-demand table (`CasesTable`) storing immutable ruleset versions (`RULESET#<rb>`) and case determination logs with TTL.                          |
+| **Amazon Bedrock** (Nova Lite)          | Converts structured Cedar verdicts into plain-language summaries (English, Hindi, Kannada) through Strands Agents SDK with strict digit guardrails.   |
+| **AWS Amplify Hosting**                 | Continuous integration and global CDN hosting for the Vite/React single-page application.                                                             |
 
 Everything scales to zero. Weekend cost: **under $1**, excluding Bedrock calls.
 
@@ -75,33 +55,48 @@ API Endpoint: `https://wi73sdx8ib.execute-api.ap-south-1.amazonaws.com`
 
 ---
 
-### Run locally
+## Testing Locally
 
-<details>
-<summary><b>Local setup & run instructions</b></summary>
+If you want to run and test HaqCheck on your local machine, follow these steps:
+
+### 1. Backend Setup
 
 ```bash
-# Backend
 cd backend
-python -m venv .venv && .venv\Scripts\activate   # Windows; source .venv/bin/activate on macOS/Linux
+# Create and activate a virtual environment
+python -m venv .venv 
+.venv\Scripts\activate   # On Windows
+# source .venv/bin/activate  # On macOS/Linux
+
+# Install dependencies
 pip install -r requirements-dev.txt
-python -m pytest -v                                # 25 unit tests, no AWS needed
 
-python scripts/create_stores.py                    # once for the event
-sam build && sam deploy                             # needs AWS credentials
-python scripts/sync_policies.py                     # pushes Cedar policies to both AVP stores
-python scripts/run_tests.py                          # 15 live-AVP cases
-
-# Frontend
-cd ../frontend
-npm install
-cp .env.example .env                                 # set VITE_API_BASE to the sam deploy ApiUrl output
-npm run dev
+# Run unit tests (No AWS credentials needed)
+python -m pytest -v
 ```
 
-</details>
+If you want to deploy the backend to AWS for live testing:
 
-## Sources & disclaimer
+```bash
+python scripts/create_stores.py    # Run once to create AVP stores
+sam build && sam deploy            # Requires AWS credentials
+python scripts/sync_policies.py    # Pushes Cedar policies to stores
+python scripts/run_tests.py        # Runs tests against live AVP
+```
+
+### 2. Frontend Setup
+
+```bash
+cd ../frontend
+npm install
+
+# Copy the example environment file
+cp .env.example .env
+# Important: Update VITE_API_BASE in .env to the ApiUrl output from the SAM deployment (or the live endpoint)
+
+# Start the local development server
+npm run dev
+```
 
 <details>
 <summary><b>Legal sources & disclaimer</b></summary>
@@ -120,7 +115,8 @@ npm run dev
 Stop 01, "First Commit" — 17–20 Sept 2026, Bangalore.
 
 ### 📝 Architecture Article (AWS Builder Center)
-Read the full technical deep dive and build log published on AWS Builder Center:  
+
+Read the full technical deep dive and build log published on AWS Builder Center:
 👉 **[Cedar Decides. The LLM Just Talks.](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)**
 👉 **[Cedar Decides. The LLM Just Talks.](https://builder.aws.com/post/3JUNNe3oGijmQnWBcDKmTZf6lia_p/cedar-decides-the-llm-just-talks)**
 
@@ -130,6 +126,7 @@ Read the full technical deep dive and build log published on AWS Builder Center:
 Claude Code (Anthropic) was used for web Search, code generation and review. All Cedar policies were hand-authored against the sources above (with citation research done via web search, not generated by a model); the underlying facts were verified before the policies were written, not invented by the model.
 
 Idea was given by my mind:) not any AI
+
 </details>
 
 <div align="center">

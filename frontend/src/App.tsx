@@ -132,11 +132,10 @@ export default function App() {
       {/* Hero */}
       <section className="hero">
         <h1 className="hero-title">
-          Appeal a <span className="ink-mark">citation</span>, not a vibe.
+          Know your <span className="ink-mark">rights</span>, backed by rules.
         </h1>
         <p className="hero-desc">
-          Central Rules set a 90-day threshold. Karnataka&apos;s court order adds a welfare fee.
-          HaqCheck runs both as Cedar policy — the model only translates the verdict.
+          HaqCheck is an eligibility checker for gig workers in India (e.g., Swiggy, Zomato). Enter your work details to instantly see which government welfare benefits you qualify for under actual Central and Karnataka state laws, explained simply in your preferred language.
         </p>
       </section>
 
