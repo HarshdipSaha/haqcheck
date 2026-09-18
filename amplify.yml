@@ -8,6 +8,7 @@ frontend:
         - npm run sync-data
     build:
       commands:
+        - cd frontend
         - npm run build
   artifacts:
     baseDirectory: frontend/dist
