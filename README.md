@@ -46,7 +46,23 @@ Two Indian welfare regimes for gig workers now overlap, and they don't agree.
 
 ## Built on AWS
 
-Amazon Verified Permissions (Cedar) · Lambda · API Gateway (HTTP API) · DynamoDB · Amazon Bedrock (Nova Lite) via Strands Agents SDK · Amplify Hosting.
+<p align="left">
+  <a href="https://aws.amazon.com/verified-permissions/"><img src="https://img.shields.io/badge/Amazon%20Verified%20Permissions-Cedar-DD344C?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="Amazon Verified Permissions (Cedar)" /></a>
+  <a href="https://aws.amazon.com/lambda/"><img src="https://img.shields.io/badge/AWS%20Lambda-Serverless-FF9900?style=for-the-badge&logo=awslambda&logoColor=white" alt="AWS Lambda" /></a>
+  <a href="https://aws.amazon.com/api-gateway/"><img src="https://img.shields.io/badge/Amazon%20API%20Gateway-HTTP%20API-FF4F8B?style=for-the-badge&logo=amazonapigateway&logoColor=white" alt="Amazon API Gateway" /></a>
+  <a href="https://aws.amazon.com/dynamodb/"><img src="https://img.shields.io/badge/Amazon%20DynamoDB-NoSQL-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white" alt="Amazon DynamoDB" /></a>
+  <a href="https://aws.amazon.com/bedrock/"><img src="https://img.shields.io/badge/Amazon%20Bedrock-Nova%20Lite-00A4A6?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="Amazon Bedrock (Nova Lite)" /></a>
+  <a href="https://aws.amazon.com/amplify/"><img src="https://img.shields.io/badge/AWS%20Amplify-Hosting-FF9900?style=for-the-badge&logo=awsamplify&logoColor=white" alt="AWS Amplify Hosting" /></a>
+</p>
+
+| AWS Service | Component & Architecture Role |
+| :--- | :--- |
+| **Amazon Verified Permissions** (Cedar) | Evaluates eligibility deterministically using strict Cedar policy sets (`central` and `karnataka`) with exact `@source` legal clause citations. |
+| **AWS Lambda** | Python 3.12 serverless handlers (`/evaluate` and `/explain`) scaling to zero with on-demand invocation. |
+| **Amazon API Gateway** (HTTP API) | High-throughput, low-latency API gateway routing client evaluation and explanation requests with CORS enabled. |
+| **Amazon DynamoDB** | On-demand table (`CasesTable`) storing immutable ruleset versions (`RULESET#<rb>`) and case determination logs with TTL. |
+| **Amazon Bedrock** (Nova Lite) | Converts structured Cedar verdicts into plain-language summaries (English, Hindi, Kannada) through Strands Agents SDK with strict digit guardrails. |
+| **AWS Amplify Hosting** | Continuous integration and global CDN hosting for the Vite/React single-page application. |
 
 Everything scales to zero. Weekend cost: **under $1**, excluding Bedrock calls.
 
