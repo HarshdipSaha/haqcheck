@@ -32,8 +32,10 @@ Then there was the frontend, which fought back more than I expected for somethin
 
 ## Where it stands
 
-The backend has 25 unit tests passing with no AWS needed, plus 15 live test cases run straight against the deployed AVP stores. What isn't done yet: the Amplify deployment and the demo video, both last on the list before submission. No hosted link to hand you today. If you're reading this before those land, that part's still coming.
+The backend has 25 unit tests passing with no AWS needed, plus 15 live test cases run straight against the deployed AVP stores. The frontend is live on AWS Amplify: https://main.duuh4vgnn5xa3.amplifyapp.com/, feel free to try it, always open to feedback!
 
-I used Claude Code for planning, for a good chunk of the code, and for review, and I'm saying that plainly because the hackathon rules ask for it. What I didn't let it do is write the policies. Every Cedar rule was authored against a source I checked myself. The citation research ran over search, done by me, because a model guessing at what a plausible Indian labor rule might say is exactly the failure mode this whole project exists to prevent. The facts came first. The policies came after.
+Published on AWS Builder Center: https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks
 
-HaqCheck is a hackathon submission for WeMakeDevs × AWS Bharat Builds Tour, Stop 01, "First Commit," built over the 17-20 September 2026 weekend in Bangalore. It's an eligibility estimate with citations attached, not legal advice. If you're a gig worker trying to work out which welfare law actually covers you, please still go talk to someone whose job that actually is.
+I used Claude Code for web search, for a good chunk of the code, and for review, and I'm saying that plainly because the hackathon rules ask for it. What I didn't let it do is write the policies. Every Cedar rule was authored against a source I checked myself. The citation research ran over search, done by me, because a model guessing at what a plausible Indian labor rule might say is exactly the failure mode this whole project exists to prevent. The facts came first. The policies came after.
+
+HaqCheck is a hackathon submission for WeMakeDevs × AWS Bharat Builds Tour, Stop 01, "First Commit," built over the 17-20 September 2026 weekend. It's an eligibility estimate with citations attached, not legal advice. If you're a gig worker trying to work out which welfare law actually covers you, please still go talk to someone whose job that actually is.

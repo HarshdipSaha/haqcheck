@@ -26,13 +26,17 @@
 5. [x] **Live System Verification:** Ran test suite against live cloud resources; tested `/evaluate` and `/explain` endpoints.
 6. [x] **Frontend Environment Configuration:** Configured `VITE_API_BASE` in `haqcheck/frontend/.env` and verified production build with Vite.
 7. [x] **AWS Amplify Hosting Pipeline:** Connected GitHub repository `HarshdipSaha/haqcheck`, resolved working-directory build issue, and deployed live web application.
+8. [x] **Playwright E2E Automated Verification:** Performed full browser automation test on live URL across desktop (1440×900) and mobile (390×844) viewports with zero console errors.
+9. [x] **Technical Article Publication:** Published official deep dive on AWS Builder Center for the "Best Blog" prize track.
 
 ---
 
 ## Live Resources
 
 - **Public Web Application:** [https://main.duuh4vgnn5xa3.amplifyapp.com/](https://main.duuh4vgnn5xa3.amplifyapp.com/)
+- **AWS Builder Center Article:** [https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)
 - **API Gateway Endpoint:** `https://wi73sdx8ib.execute-api.ap-south-1.amazonaws.com`
 - **Central Policy Store ID:** `XiKowsn8gqRHXuTQr1Dsuf`
 - **Karnataka Policy Store ID:** `QuKBLNiHJBrTdgwroJgUFc`
 - **DynamoDB Table:** `haqcheck-CasesTable-1KC71H1AIB5MH`
+- **Desktop Screenshot Artifact:** `desktop-1440x900.png`

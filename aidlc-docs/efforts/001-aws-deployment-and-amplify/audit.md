@@ -67,3 +67,17 @@
 - **Final Deployment:**
   - Deployment succeeded.
   - Live URL: **https://main.duuh4vgnn5xa3.amplifyapp.com/**
+
+### Phase 6: Automated Playwright E2E Verification
+- **Action:** Subagent executed browser automation test suite using Playwright on live URL:
+  - Page load: 1385ms, HTTP 200, 0 console errors, 0 failed assets.
+  - Evaluated worker scenarios (Karnataka Swiggy rider with 73 days: Central Not Eligible, Karnataka Eligible with `KA-HC-2026-cess-scope`).
+  - Evaluated 95-day threshold flip: Central flipped to Eligible with `IN-SSR2026-90day`.
+  - Responsive testing: Mobile 390×844 verified with zero horizontal overflow (`scrollWidth: 390px`).
+  - Desktop capture: 1440×900 populated state saved to `desktop-1440x900.png`.
+
+### Phase 7: AWS Builder Center Publication
+- **Action:** Technical architecture deep dive authored and published on AWS Builder Center:
+  - Article: *"Cedar Decides. The LLM Just Talks."*
+  - Public URL: [https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)
+  - Linked in `README.md` and prepared for WeMakeDevs "Best Blog" prize submission.

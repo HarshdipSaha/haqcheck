@@ -9,11 +9,12 @@ Which Indian gig-worker welfare rule applies to you — decided by **Cedar** in 
 [![AWS Verified Permissions](https://img.shields.io/badge/AWS-Verified%20Permissions-FF9900?style=flat-square&logo=amazonaws&logoColor=white)](https://aws.amazon.com/verified-permissions/)
 [![Cedar](https://img.shields.io/badge/Policy%20Engine-Cedar-232F3E?style=flat-square)](https://www.cedarpolicy.com/)
 [![Amazon Bedrock](https://img.shields.io/badge/Amazon%20Bedrock-Nova%20Lite-8C4FFF?style=flat-square&logo=amazonaws&logoColor=white)](https://aws.amazon.com/bedrock/)
+[![AWS Builder Center](https://img.shields.io/badge/AWS%20Builder%20Center-Article%20Published-FF9900?style=flat-square&logo=amazonwebservices&logoColor=white)](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)](backend/requirements-dev.txt)
 [![Tests](https://img.shields.io/badge/unit%20tests-25%20passing-3fb950?style=flat-square)](backend/tests/)
 [![Hackathon](https://img.shields.io/badge/WeMakeDevs%20%C3%97%20AWS-Bharat%20Builds%20Tour-0d1117?style=flat-square)]()
 
-**[The problem](#the-problem)** · **[How it works](#how-it-works)** · **[Live Demo](https://main.duuh4vgnn5xa3.amplifyapp.com/)** · **[Try it](#try-it)**
+**[The problem](#the-problem)** · **[How it works](#how-it-works)** · **[Live Demo](https://main.duuh4vgnn5xa3.amplifyapp.com/)** · **[Architecture Blog](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)** · **[Try it](#try-it)**
 
 </div>
 
@@ -117,6 +118,10 @@ npm run dev
 ## Built for WeMakeDevs × AWS Bharat Builds Tour
 
 Stop 01, "First Commit" — 17–20 Sept 2026, Bangalore.
+
+### 📝 Architecture Article (AWS Builder Center)
+Read the full technical deep dive and build log published on AWS Builder Center:  
+👉 **[Cedar Decides. The LLM Just Talks.](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)**
 
 <details>
 <summary><b>AI tools used (hackathon rule 03)</b></summary>
