@@ -13,7 +13,7 @@ Which Indian gig-worker welfare rule applies to you — decided by **Cedar** in 
 [![Tests](https://img.shields.io/badge/unit%20tests-25%20passing-3fb950?style=flat-square)](backend/tests/)
 [![Hackathon](https://img.shields.io/badge/WeMakeDevs%20%C3%97%20AWS-Bharat%20Builds%20Tour-0d1117?style=flat-square)]()
 
-**[The problem](#the-problem)** · **[How it works](#how-it-works)** · **[Try it](#try-it)**
+**[The problem](#the-problem)** · **[How it works](#how-it-works)** · **[Live Demo](https://main.duuh4vgnn5xa3.amplifyapp.com/)** · **[Try it](#try-it)**
 
 </div>
 
@@ -52,12 +52,16 @@ Everything scales to zero. Weekend cost: **under $1**, excluding Bedrock calls.
 
 ## Try it
 
-No hosted demo yet — Amplify deployment and the 2–3 min demo video are the last two tasks before submission.
+🌐 **Live Application (AWS Amplify):** **[https://main.duuh4vgnn5xa3.amplifyapp.com/](https://main.duuh4vgnn5xa3.amplifyapp.com/)**
 
-Until then, run it locally:
+API Endpoint: `https://wi73sdx8ib.execute-api.ap-south-1.amazonaws.com`
+
+---
+
+### Run locally
 
 <details>
-<summary><b>Full setup & run instructions</b></summary>
+<summary><b>Local setup & run instructions</b></summary>
 
 ```bash
 # Backend
