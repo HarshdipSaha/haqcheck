@@ -14,3 +14,7 @@ frontend/dist/
 # env
 .env
 frontend/.env
+venv/
+backend/venv/
+scratch/
+backend/src/test_*.py

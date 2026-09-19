@@ -7,9 +7,9 @@
 ## Efforts Summary
 
 | Effort ID | Title | Domain | Status | Started | Completed | Artifacts |
-| :--- | :--- | :--- | :---: | :---: | :---: | :--- |
 | **001** | **AWS End-to-End Deployment & Amplify Hosting** | Infra / CI/CD | `complete` | 2026-09-18 | 2026-09-18 | [`001-aws-deployment-and-amplify`](efforts/001-aws-deployment-and-amplify/effort-state.md) |
 | **002** | **Initial Planning** | Planning | `complete` | 2026-09-19 | 2026-09-19 | [`002-initial-planning`](efforts/002-initial-planning/effort-state.md) |
+| **003** | **Multilingual Translation Guardrail Fix & Bedrock Verification** | Backend / LLM | `blocked` | 2026-09-19 | - | [`003-multilingual-bedrock-verification`](efforts/003-multilingual-bedrock-verification/effort-state.md) |
 
 ---
 
