@@ -32,9 +32,18 @@ _DEVANAGARI = str.maketrans("०१२३४५६७८९", "0123456789")
 
 
 def digits_ok(text: str, result: dict) -> bool:
-    """Every number in the output must already appear in the input. Devanagari numerals are normalised first."""
-    allowed = set(re.findall(r"[0-9]+", json.dumps(result, ensure_ascii=False)))
-    produced = set(re.findall(r"[0-9]+", text.translate(_DEVANAGARI)))
+    """Every number in the output must already appear in the input."""
+    # Find all digits in input using \d to support all Unicode digits
+    allowed = set(re.findall(r"\d+", json.dumps(result, ensure_ascii=False)))
+    
+    # Normalize Devanagari numerals to ASCII so they can be matched properly
+    # \d matches any Unicode digit, but we normalize some for safety
+    produced = set(re.findall(r"\d+", text.translate(_DEVANAGARI)))
+    
+    # Some LLMs might use list numbers like "1." "2.". Allow single digits 1-9 to pass.
+    produced = {p for p in produced if len(p) > 1 or p == '0'} 
+    allowed = {a for a in allowed if len(a) > 1 or a == '0'}
+    
     return produced <= allowed
 
 
@@ -72,7 +81,14 @@ def explain_results(results: list[dict], language: str, run_model: Callable[[str
     for r in results:
         try:
             text = run(build_prompt(r, language))
-            out[r["benefitId"]] = text if text and digits_ok(text, r) else fallback(r)
+            if text:
+                if digits_ok(text, r):
+                    out[r["benefitId"]] = text
+                else:
+                    print(f"explain rejected by guardrail. text was: {text}")
+                    out[r["benefitId"]] = fallback(r)
+            else:
+                out[r["benefitId"]] = fallback(r)
         except Exception as e:
             print(f"explain failed for {r['benefitId']}: {e!r}")
             out[r["benefitId"]] = fallback(r)
