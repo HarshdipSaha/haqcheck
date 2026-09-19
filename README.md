@@ -114,10 +114,14 @@ npm run dev
 
 Stop 01, "First Commit" — 17–20 Sept 2026, Bangalore.
 
+[Demo](https://www.loom.com/share/0844b207fd184f2a88ffe1b95d4a038f)
+
 ### 📝 Architecture Article (AWS Builder Center)
 
 Read the full technical deep dive and build log published on AWS Builder Center:
+
 👉 **[Cedar Decides. The LLM Just Talks.](https://builder.aws.com/content/3JUK7jCVjwlCkjniq3MelEzflJU/cedar-decides-the-llm-just-talks)**
+
 👉 **[Cedar Decides. The LLM Just Talks.](https://builder.aws.com/post/3JUNNe3oGijmQnWBcDKmTZf6lia_p/cedar-decides-the-llm-just-talks)**
 
 <details>
