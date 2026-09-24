@@ -11,7 +11,7 @@
 ## State Machine
 `planning` ➔ `in-progress` ➔ `blocked` (Waiting on AWS Account Verification)
 
-- **Current State:** `blocked` / `awaiting-verification`
+- **Current State:** `blocked` / `awaiting-verification`, now working end to end
 - **Verification Evidence:**
   - Automated Playwright testing (`scratch/node_multilingual_test.js`) executed against live deployment.
   - AWS Bedrock API queried directly: `"authorizationStatus": "NOT_AUTHORIZED"`.
